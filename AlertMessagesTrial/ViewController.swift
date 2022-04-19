@@ -8,17 +8,18 @@
 import UIKit
 
 class ViewController: UIViewController {
+    lazy var bannerView = BannerView.instanceFromNib()
     @IBAction func showMessageButton(_ sender: Any) {
-        let bannerView = BannerView.instanceFromNib()
-        bannerView.showBanner(theme: Theme.success,
-                              bodyText: "This operation might lead to a future error",
-                              roundedCornerRadius: 8,
-                              animationDuration: 0.5,
-                              hideDelay: 2,
-                              hideButton: false)
         bannerView.setAction {
             print("Working")
         }
+        bannerView.showBanner(theme: Theme.success,
+                              bodyText: "This operation might lead to a future error",
+                              roundedCornerRadius: 8,
+                              animationDuration: 0.9,
+                              hideDelay: 3,
+                              hideButton: false)
+       
 //        view.addSubview(bannerView)
     }
     

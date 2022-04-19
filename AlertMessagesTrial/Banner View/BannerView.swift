@@ -15,11 +15,11 @@ class BannerView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageBody: UILabel!
     @IBOutlet weak var messageButton: UIButton!
+    
     @IBAction private func messageButtonAction(_ sender: Any) {
-       buttonClosure?()
+        buttonClosure?()
     }
-    
-    
+        
     class func instanceFromNib() -> BannerView {
         Bundle.loadView(fromClass: BannerView.self)
     }
@@ -109,8 +109,6 @@ class BannerView: UIView {
     
      func setAction(closure: @escaping () -> Void) {
         buttonClosure = closure
-        messageButton.addTarget(self, action: #selector(messageButtonAction(_:)), for: .touchUpInside)
-
     }
     
     //MARK: -Configure Title Label text and Labels colors
