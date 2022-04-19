@@ -1,0 +1,6 @@
+framework module Pods_AlertMessagesTrial {
+  umbrella header "Pods-AlertMessagesTrial-umbrella.h"
+
+  export *
+  module * { export * }
+}
