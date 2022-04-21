@@ -17,17 +17,11 @@ class ViewController: UIViewController {
                               bodyText: "This operation might lead to a future error",
                               roundedCornerRadius: 8,
                               animationDuration: 0.9,
-                              hideDelay: 3,
+                              hideDelay: 5,
                               hideButton: false)
-       
-//        view.addSubview(bannerView)
+        //        view.addSubview(bannerView)
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
-
-
 }
-
