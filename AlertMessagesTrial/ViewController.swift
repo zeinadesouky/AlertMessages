@@ -19,7 +19,7 @@ class ViewController: UIViewController {
                               animationDuration: 0.9,
                               hideDelay: 5,
                               hideButton: false)
-        //        view.addSubview(bannerView)
+//                view.addSubview(bannerView)
     }
     override func viewDidLoad() {
         super.viewDidLoad()

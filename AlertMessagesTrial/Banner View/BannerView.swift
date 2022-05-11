@@ -24,6 +24,7 @@ class func instanceFromNib() -> BannerView {
     var topConstraint: NSLayoutConstraint?
     var heightConstraint: NSLayoutConstraint?
     let superView = UIApplication.shared.keyWindow!.rootViewController!.view!
+//    backgroundView.isUserInteractionEnabled = true
     // MARK: - Configure View Layout
     private func configureBgView(bgColor: UIColor) {
         backgroundView.layer.opacity = 1
@@ -109,27 +110,64 @@ class func instanceFromNib() -> BannerView {
     private func display() {
         topConstraint?.constant = 44
         heightConstraint?.constant = 64
-
-        UIView.animate(withDuration: 0.8) {
+//        UIView.animate(withDuration: 0.8) {
+//            self.superView.layoutIfNeeded()
+//        }
+        let animator = UIViewPropertyAnimator(duration: 0.8, curve: .easeIn) {
             self.superView.layoutIfNeeded()
         }
+        animator.startAnimation()
+        let scale = UIViewPropertyAnimator(duration: 0.6,
+            curve: .easeOut)
+        animator.addCompletion { position in
+            if position == .end {
+                animator.stopAnimation(false)
+                scale.isInterruptible = true
+                 scale.isUserInteractionEnabled = true
+                scale.addAnimations {
+                    self.topConstraint?.constant = 0 - self.backgroundView.frame.height
+                    self.superView.layoutIfNeeded()
+                }
+                scale.startAnimation(afterDelay: 5.0)
+                }
+        }
     }
-
     private func hide(view: UIView, for animationDuration: CGFloat, hideDelay: CGFloat) {
         UIView.animate(withDuration: animationDuration,
                        delay: hideDelay,
                        options: [.allowUserInteraction, .curveLinear],
                        animations: {
-            self.messageButton.alpha = 0.010000001
+//            self.messageButton.alpha = 0.011
+//            self.messageButton.layer.opacity = 0.01
             self.topConstraint?.constant = 0 - view.frame.height
             self.superView.layoutIfNeeded()
         }, completion: { finished in
             if finished {
+                self.messageButton.alpha = 0.0
                 view.removeFromSuperview()
             }
         })
     }
+    private func hide(view: UIView) {
+        let scale = UIViewPropertyAnimator(duration: 0.33,
+            curve: .easeOut)
+          scale.addAnimations {
+              self.topConstraint?.constant = 0 - view.frame.height
+              self.superView.layoutIfNeeded()
+          }
 
+          scale.addAnimations({
+              self.backgroundView.transform = CGAffineTransform.identity
+              view.removeFromSuperview()
+          }, delayFactor: 0.33)
+        scale.addCompletion { position in
+            if position == .end {
+            view.removeFromSuperview()
+        }
+        }
+        scale.startAnimation()
+
+    }
     private func configure(theme: Theme) {
         switch theme {
         case .success:
@@ -173,7 +211,8 @@ class func instanceFromNib() -> BannerView {
         roundViewCorners(roundedCornerRadius: roundedCornerRadius)
         set(bodyText: bodyText)
         display()
-        hide(view: backgroundView, for: animationDuration, hideDelay: hideDelay)
+//        hide(view: backgroundView, for: animationDuration, hideDelay: hideDelay)
+//        hide(view: backgroundView)
 
         if hideButton == true {
             messageButton.isHidden = true
