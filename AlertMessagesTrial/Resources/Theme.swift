@@ -8,11 +8,8 @@
 import Foundation
 import UIKit
 
-
-
 public enum Theme {
     case success
     case error
     case warning
 }
-
