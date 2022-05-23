@@ -114,10 +114,10 @@ class func instanceFromNib() -> BannerView {
             self.superView.layoutIfNeeded()
         }
     }
-
     private func hide(view: UIView, for animationDuration: CGFloat, hideDelay: CGFloat) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + hideDelay) {
         UIView.animate(withDuration: animationDuration,
-                       delay: hideDelay,
+                       delay: 0,
                        options: [.allowUserInteraction, .curveLinear],
                        animations: {
             self.messageButton.alpha = 0.010000001
@@ -128,6 +128,7 @@ class func instanceFromNib() -> BannerView {
                 view.removeFromSuperview()
             }
         })
+        }
     }
 
     private func configure(theme: Theme) {
